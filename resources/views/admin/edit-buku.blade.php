@@ -56,28 +56,31 @@
         </div>
         <hr>
         <section id="#penulis-form">
-            <div class="mb-3 penulis-input">
-                <label class="form-label @error('nama-penulis-1') is-invalid @enderror"><b>Nama Penulis</b></label>
-                <input type="text" name="nama-penulis-1" class="form-control" placeholder="Masukan Nama Penulis 1" value=" {{$book->author->name ?? ''}}">
-                @error('nama-penulis-1')
-                <div class="invalid-feedback">
-                    <p>{{ $message }}</p>
+            @foreach($book->author as $author)
+                <div class="mb-3">
+                    <label class="form-label @error('nama-penerbit') is-invalid @enderror"><b>Nama Penulis</b></label>
+                    <input type="text" name="nama-penerbit" class="form-control" placeholder="Masukan Nama Penerbit" value="{{$author->name ?? ''}}">
+                    @error('nama-penerbit')
+                    <div class="invalid-feedback">
+                        <p>{{ $message }}</p>
+                    </div>
+                    @enderror
                 </div>
-                @enderror
-            </div>
+            @endforeach
         </section>
         {{--            <div class="text-end">--}}
         {{--                <a class="link-info text-decoration-none" href="#tambah-penulis" onclick="add_penulis()">+ Tambah Penulis Lain.</a>--}}
         {{--            </div>--}}
-        <div class="mb-3">
-            <label class="form-label @error('nama-penerbit') is-invalid @enderror"><b>Nama Penerbit</b></label>
-            <input type="text" name="nama-penerbit" class="form-control" placeholder="Masukan Nama Penerbit" value="{{$book->author->name ?? ''}}">
-            @error('nama-penerbit')
+        <div class="mb-3 penulis-input">
+            <label class="form-label @error('nama-penulis-1') is-invalid @enderror"><b>Nama Penerbit</b></label>
+            <input type="text" name="nama-penulis-1" class="form-control" placeholder="Masukan Nama Penulis" value=" {{$book->publisher->name ?? ''}}">
+            @error('nama-penulis-1')
             <div class="invalid-feedback">
                 <p>{{ $message }}</p>
             </div>
             @enderror
         </div>
+
         <div class="mt-5 text-center">
             <button type="submit" name="simpan-buku-submit" class="btn btn-success">Simpan</button>
         </div>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name', 50)->nullable();
             $table->text('password');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

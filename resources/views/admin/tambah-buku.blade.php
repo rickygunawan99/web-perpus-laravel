@@ -19,10 +19,11 @@
             <h2>TAMBAH BUKU</h2>
         </section>
 
-        <form action="{{route("admin.add-book")}}" method="POST">
+        <form action="{{route("admin.add-book")}}" method="POST" name="authors">
             <div class="mb-3">
                 <label for="judulBuku" class="form-label @error('judul-buku') is-invalid @enderror"><b>Judul Buku</b></label>
-                <input type="text" name="judul-buku" class="form-control" id="judulBuku" placeholder="Masukan Judul Buku">
+                <input type="text" name="judul-buku" class="form-control" id="judulBuku" placeholder="Masukan Judul Buku"
+                       value="{{old('judul-buku') ?? ''}}">
                 @error('judul-buku')
                     <div class="invalid-feedback">
                         <p>{{ $message }}</p>
@@ -58,7 +59,7 @@
             <section id="#penulis-form">
                 <div class="mb-3 penulis-input">
                     <label class="form-label @error('nama-penulis-1') is-invalid @enderror"><b>Nama Penulis</b></label>
-                    <input type="text" name="nama-penulis-1" class="form-control" placeholder="Masukan Nama Penulis 1">
+                    <input type="text" name="nama-penulis[0]" class="form-control" placeholder="Masukan Nama Penulis 1">
                     @error('nama-penulis-1')
                     <div class="invalid-feedback">
                         <p>{{ $message }}</p>
@@ -66,9 +67,9 @@
                     @enderror
                 </div>
             </section>
-{{--            <div class="text-end">--}}
-{{--                <a class="link-info text-decoration-none" href="#tambah-penulis" onclick="add_penulis()">+ Tambah Penulis Lain.</a>--}}
-{{--            </div>--}}
+            <div class="text-end">
+                <a class="link-info text-decoration-none" href="#tambah-penulis" onclick="add_penulis()">+ Tambah Penulis Lain.</a>
+            </div>
             <div class="mb-3">
                 <label class="form-label @error('nama-penerbit') is-invalid @enderror"><b>Nama Penerbit</b></label>
                 <input type="text" name="nama-penerbit" class="form-control" placeholder="Masukan Nama Penerbit">
@@ -79,14 +80,14 @@
                 @enderror
             </div>
 
-{{--            <div class="mb-3">--}}
-{{--                <div class="row w-50">--}}
-{{--                    <div class="">--}}
-{{--                        <img id="thumb" src="" width="190" height="300">--}}
-{{--                        <input type="file" class="form-control mt-2" onchange="preview()" name="image-upload" id="image-upload">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            <div class="mb-3">
+                <div class="row w-50">
+                    <div class="">
+                        <img id="thumb" src="{{asset('/storage/upload.jpg')}}" width="200" height="300">
+                        <input type="file" class="form-control mt-2" onchange="preview()" name="image-upload" id="image-upload">
+                    </div>
+                </div>
+            </div>
 
             <div class="mt-5 text-center">
                 <button type="submit" name="simpan-buku-submit" class="btn btn-success">Simpan</button>
@@ -109,7 +110,7 @@
         label.innerHTML = "<b>Nama Penulis " + (num + 1) + "</b>";
         const input = document.createElement("input");
         input.setAttribute("type", "text");
-        input.setAttribute("name", "nama-penulis-" + (num + 1));
+        input.setAttribute("name", "nama-penulis[" + (num+1) + "]");
         input.setAttribute("class", "form-control");
         input.setAttribute("placeholder", "Masukan Nama Penulis " + (num + 1));
 
@@ -119,6 +120,10 @@
         const parent = document.getElementById("#penulis-form");
 
         parent.appendChild(tag_div);
+    }
+
+    function preview() {
+        thumb.src = URL.createObjectURL(event.target.files[0]);
     }
 </script>
 

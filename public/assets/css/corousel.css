@@ -1,0 +1,19 @@
+.corousel {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.corousel-body {
+  background: #eee;
+}
+
+.corousel-cell {
+  width: 66%;
+  height: 350px;
+  /* counter-increment: corousel-cell; */
+}
+
+.corousel-cell > img {
+  width: 100%;
+  overflow: hidden;
+}

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('publishers', function (Blueprint $table){
             $table->id('id_publisher')->autoIncrement();
             $table->string('name')->default('0');
+            $table->softDeletes();
         });
     }
 

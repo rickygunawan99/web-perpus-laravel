@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table){
             $table->id('id_category')->autoIncrement();
             $table->string('category_name', 50)->default('0');
+            $table->softDeletes();
         });
     }
 

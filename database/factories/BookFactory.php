@@ -20,11 +20,12 @@ class BookFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->word(),
-            'total_page' => $this->faker->numberBetween(111, 4444),
+            'title' => $this->faker->sentence(3),
+            'total_page' => $this->faker->numberBetween(70, 427),
             'category_id' => $this->faker->numberBetween(1, Category::all()->count()),
-            'author_id' => $this->faker->numberBetween(1, Author::all()->count()),
             'publisher_id' => $this->faker->numberBetween(1, Publisher::all()->count()),
+            'jml_tersedia' => $this->faker->randomNumber(1,5),
+            'description' => $this->faker->sentence(rand(10,25))
         ];
     }
 }

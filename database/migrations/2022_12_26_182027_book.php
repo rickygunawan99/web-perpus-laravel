@@ -14,13 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('books', function (Blueprint $table){
-            $table->id('id_books')->autoIncrement();
+            $table->id('id_book')->autoIncrement();
             $table->string('title', 200);
             $table->integer('total_page');
+            $table->text('description')->nullable();
             $table->foreignId('category_id')->constrained('categories', 'id_category');
-            $table->foreignId('author_id')->constrained('authors', 'id_author');
             $table->foreignId('publisher_id')->constrained('publishers', 'id_publisher');
-            $table->unsignedInteger('stock')->nullable();
+            $table->text('path_img')->nullable();
+            $table->unsignedInteger('jml_tersedia')->nullable();
+            $table->softDeletes();
         });
     }
 

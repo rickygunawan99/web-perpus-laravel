@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBookRequest;
 use App\Models\Admin;
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\Publisher;
 use Exception;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         return view('admin.dashboard', [
-            'books' => Book::with('author')->get()
+            'books' => Book::with('author')->with('publisher')->with('category')->cursorPaginate(10)
         ]);
     }
 
@@ -28,34 +32,30 @@ class AdminController extends Controller
         ]);
     }
 
-    public function doAddBook(Request $request): RedirectResponse
+    public function doAddBook(StoreBookRequest $request): RedirectResponse
     {
-        $validator = Validator::make($request->all(), [
-            'judul-buku' => ['required', 'max:200'],
-            'jml-halaman' => ['required', 'gt:10'],
-            'kategori' => 'required',
-            'nama-penulis-1' => 'required',
-            'nama-penerbit' => 'required'
-        ], [
-            'judul-buku.required' => 'required judul buku',
-            'jml-halaman.gt' => 'minimal halaman 10'
-        ]);
-
-        if($validator->fails()){
-            return response()->redirectToRoute('admin.add-book')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $validated = $validator->safe()->all();
+        $validated = $request->safe()->all();
 
         $book = new Book();
         $book->title = $validated['judul-buku'];
         $book->total_page = $validated['jml-halaman'];
-        $book->category_id = $validated['kategori'];
-        $book->author_id = $validated['nama-penulis-1'];
-        $book->publisher_id = $validated['nama-penerbit'];
+
+        $category = Category::where("id_category", $validated['kategori'])->first();
+
+        $publisher = Publisher::where("name", $validated['nama-penerbit'])->firstOrCreate([
+            'name' => $validated['nama-penerbit']
+        ]);
+
+        $book->category()->associate($category);
+        $book->publisher()->associate($publisher);
         $book->save();
+
+        foreach ($validated['nama-penulis'] as $index=>$author){
+            $authors = Author::where("name", $author)->firstOrCreate([
+                'name' => $author
+            ]);
+            $book->author()->syncWithoutDetaching($authors);
+        }
 
         return redirect()->to('/admin')->with('success', 'Sukses menambahkan buku');
     }
@@ -72,7 +72,7 @@ class AdminController extends Controller
         }
     }
 
-    public function updateBook($id)
+    public function updateBook($id): View
     {
         $book = Book::findOrFail($id);
         $categories = Category::all();
@@ -83,7 +83,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function doLogout()
+    public function doLogout(): RedirectResponse
     {
         return redirect('/');
     }

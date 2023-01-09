@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('id_author')->autoIncrement();
             $table->string('name', 50)->default('0');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

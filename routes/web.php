@@ -13,9 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+Route::get('/book/detail/{id}', [\App\Http\Controllers\HomeController::class, 'detailBook'])
+->name('book.detail');
+Route::get('/login', [\App\Http\Controllers\HomeController::class, 'login'])
+    ->name('member.login');
+Route::post('/login', [\App\Http\Controllers\HomeController::class, 'doLogin']);
+Route::post('/member/logout/{id}', [\App\Http\Controllers\MemberController::class, 'doLogout'])->name('member.logout');
+Route::get('/cart', [\App\Http\Controllers\MemberController::class, 'editCart']);
+Route::get('/cart/detail', [\App\Http\Controllers\MemberController::class, 'cartDetail']);
 
 Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index']);
 Route::get('/admin/add/book', [\App\Http\Controllers\AdminController::class, 'addBook'])->name('admin.add-book');

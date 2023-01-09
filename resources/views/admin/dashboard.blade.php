@@ -37,31 +37,35 @@
                         <th scope="col">#</th>
                         <th scope="col">Judul</th>
                         <th scope="col">Kategori</th>
-                        <th scope="col">Penulis</th>
+{{--                        <th scope="col">Penulis</th>--}}
                         <th scope="col">Penerbit</th>
                         <th scope="col">Stok</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($books as $buku)
+                    @foreach($books as $book)
                         <tr>
                             <th scope="row">{{$loop->iteration}}</th>
-                            <td>{{$buku->title}}</td>
-                            <td>{{$buku->category_id}}</td>
-                            <td>{{$buku->author->name}}</td>
-                            <td>{{$buku->publisher_id}}</td>
-                            <td>{{$buku->stock}}</td>
+                            <td>{{$book->title}}</td>
+                            <td>{{$book->category->category_name}}</td>
+{{--                            <td>{{$book->author->name}}</td>--}}
+                            <td>{{$book->publisher->name}}</td>
+                            <td>{{$book->stock ?? 'N/A'}}</td>
                             <td>
-                                <a href="{{route('book.update.store', ['id'=>$buku->id_book])}}" class="btn btn-primary btn-sm"><i class="bi bi-pen"></i></a>
+                                <a href="{{route('book.update.store', ['id'=>$book->id_book])}}" class="btn btn-primary btn-sm"><i class="bi bi-pen"></i></a>
                                 <button type="submit" class="btn btn-danger btn-sm open-modal-hapus-buku" data-bs-toggle="modal" data-bs-target="#hapusBukuModal"
-                                        data-id="{{$buku->id_book}}"><i class="bi bi-trash"></i></button>
+                                        data-id="{{$book->id_book}}"><i class="bi bi-trash"></i></button>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </section>
+    </div>
+
+    <div class="d-flex justify-content-end me-5 pe-2">
+        {{$books->links()}}
     </div>
 
     <!-- Modal -->
@@ -86,10 +90,15 @@
             </div>
         </div>
     </div>
+
 </body>
+
+
 @include('admin.partials.script-part');
 
 <script>
+
+
     $(document).on("click", ".open-modal-hapus-buku", function() {
         const myBookId = $(this).data('id');
         $(".modal-footer #hapus-buku-id").val(myBookId);
