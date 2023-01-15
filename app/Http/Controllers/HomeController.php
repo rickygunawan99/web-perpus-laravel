@@ -14,13 +14,20 @@ use function Symfony\Component\String\b;
 
 class HomeController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        return view('dashboard', [
-            'book_recomendation' => Book::limit(4)->get()->shuffle(),
-            'books' => Book::all()->shuffle(),
-            'categories' => Category::limit(5)->get()->shuffle()
-        ]);
+        if(!$request->input('s')){
+            return view('dashboard', [
+                'book_recomendation' => Book::limit(3)->get()->shuffle(),
+                'books' => Book::limit(6)->get()->shuffle(),
+                'categories' => Category::limit(5)->get()->shuffle()
+            ]);
+        }else{
+            $search = $request->input('s');
+            return \view('dashboard-search', [
+               'books' => Book::where('title','like', "%{$search}%")->get()
+            ]);
+        }
     }
 
     public function detailBook($id): View
@@ -54,5 +61,14 @@ class HomeController extends Controller
 
         session(['role'=>'member', 'id'=>$member->id]);
         return redirect('/');
+    }
+
+    public function dashboard()
+    {
+        if(\Session::get('role') == 'admin'){
+            return redirect('/admin');
+        }else{
+            return redirect('/');
+        }
     }
 }

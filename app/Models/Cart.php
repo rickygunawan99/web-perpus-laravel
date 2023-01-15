@@ -28,6 +28,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Cart withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Cart withoutTrashed()
  * @mixin \Eloquent
+ * @property int $total_day
+ * @property int $is_checkout
+ * @property string $is_approve
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Book[] $books
+ * @property-read int|null $books_count
+ * @property-read \App\Models\Member $member
+ * @method static \Illuminate\Database\Eloquent\Builder|Cart whereIsApprove($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Cart whereTotalDay($value)
  */
 class Cart extends Model
 {

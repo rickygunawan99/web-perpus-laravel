@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->foreignId('member_id')->constrained('members');
-            $table->unsignedInteger('total_day')->nullable();
+            $table->unsignedInteger('total_day')->default(1);
             $table->boolean('is_checkout')->default(false);
-            $table->enum('is_approve', ['pending','approve','decline'])->default('pending');
+            $table->enum('is_approve', ['pending','approve','decline', 'returned'])->default('pending');
             $table->softDeletes();
         });
     }

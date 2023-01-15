@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class AdminMiddleware
+class MemberMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,10 +17,12 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Session::get('role') == 'admin'){
+        if(Session::get('role') == 'member'){
             return $next($request);
+        } else if(Session::get('role') == 'admin') {
+            return redirect('/admin');
         }else{
-            return redirect('/');
+            return redirect('/login');
         }
     }
 }

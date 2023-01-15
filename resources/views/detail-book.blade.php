@@ -85,17 +85,18 @@
             data: {
                 _token: document.getElementById('token').value
             },
-            success: function (){
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Buku berhasil ditambahkan',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            },
-            error: function(err){
-                alert(err)
+            success: function (data){
+                if(data.status === 'oke'){
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Buku berhasil ditambahkan',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }else{
+                    alert('failed')
+                }
             }
         })
 

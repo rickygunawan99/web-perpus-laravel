@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    @include('admin.partials.style-part');
+    @include('admin.partials.style-part')
 
     <title>Admin</title>
     @if(Session::has('success'))
@@ -23,10 +23,12 @@
 </head>
 
 <body>
-    @include('admin.partials.navbar-part');
+    @include('admin.partials.navbar-part')
 
     <div class="container mt-4">
         <section class="text-end">
+            <a href="{{route('admin.approve')}}" class="btn btn-secondary">Konfirmasi Pinjam buku</a>
+            <a href="{{route('admin.carts')}}" class="btn btn-primary">Konfirmasi pengembalian</a>
             <a href="{{route('admin.add-book')}}" class="btn btn-success">+ Tambah Buku</a>
         </section>
 
@@ -39,7 +41,7 @@
                         <th scope="col">Kategori</th>
 {{--                        <th scope="col">Penulis</th>--}}
                         <th scope="col">Penerbit</th>
-                        <th scope="col">Stok</th>
+{{--                        <th scope="col">Stok</th>--}}
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -51,7 +53,7 @@
                             <td>{{$book->category->category_name}}</td>
 {{--                            <td>{{$book->author->name}}</td>--}}
                             <td>{{$book->publisher->name}}</td>
-                            <td>{{$book->stock ?? 'N/A'}}</td>
+{{--                            <td>{{$book->stock ?? 'N/A'}}</td>--}}
                             <td>
                                 <a href="{{route('book.update.store', ['id'=>$book->id_book])}}" class="btn btn-primary btn-sm"><i class="bi bi-pen"></i></a>
                                 <button type="submit" class="btn btn-danger btn-sm open-modal-hapus-buku" data-bs-toggle="modal" data-bs-target="#hapusBukuModal"
@@ -94,7 +96,7 @@
 </body>
 
 
-@include('admin.partials.script-part');
+@include('admin.partials.script-part')
 
 <script>
 

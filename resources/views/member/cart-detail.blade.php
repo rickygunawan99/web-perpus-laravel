@@ -12,6 +12,7 @@
 </head>
 <body>
 @include('/partials/navbar')
+
 <section class="h-100 h-custom">
     <div class="container h-100 py-5">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -28,6 +29,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @isset($cart->books)
                             @foreach($cart->books as $book)
                                 <tr>
                                     <th scope="row">
@@ -49,10 +51,13 @@
                                     </td>
                                     <td class="align-middle">
                                         <div class="d-flex flex-row">
-                                            <button class="btn btn-link px-2"
-                                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
+                                            <form action="{{route('cart.delete', ['id'=>$book->id_book])}}" method="post">
+                                                @csrf
+                                                <button class="btn btn-link px-2"
+                                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
 
                                             {{--                                    <input id="form1" min="0" name="quantity" value="2" type="number"--}}
                                             {{--                                           class="form-control form-control-sm" style="width: 50px;" />--}}
@@ -64,10 +69,11 @@
                                         </div>
                                     </td>
                                     <td class="align-middle">
-{{--                                        <p class="mb-0" style="font-weight: 500;">$9.99</p>--}}
+                                        {{--                                        <p class="mb-0" style="font-weight: 500;">$9.99</p>--}}
                                     </td>
                                 </tr>
                             @endforeach
+                        @endisset
                         </tbody>
                     </table>
                 </div>
@@ -144,6 +150,7 @@
 {{--                                    </div>--}}
 {{--                                </div>--}}
 {{--                            </div>--}}
+                        <form action="{{route('cart.checkout')}}" method="post" id="checkout">
                             <div class="col-lg-4 col-xl-3">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text">Total day</span>
@@ -163,15 +170,15 @@
 {{--                                    <p class="mb-2">$26.48</p>--}}
 {{--                                </div>--}}
 
-                                <button type="button" class="btn btn-primary btn-block btn-lg">
+
+                                @csrf
+                                <button type="submit" class="btn btn-primary btn-block btn-lg" id="checkout">
                                     <div class="d-flex justify-content-between">
                                         <span>Checkout</span>
                                     </div>
                                 </button>
-
                             </div>
-                        </div>
-
+                        </form>
                     </div>
                 </div>
 
@@ -196,6 +203,30 @@
         if(document.getElementById('borrow').value > 5){
             document.getElementById('borrow').value = 5;
         }
+    }
+
+    document.getElementById('checkout').onclick = () => {
+        // if(){
+        //     Swal.fire({
+        //         position: 'center',
+        //         icon: 'success',
+        //         title: 'Checkout berhasil',
+        //         showConfirmButton: false,
+        //         timer: 1500
+        //     })
+        // }else{
+        //     Swal.fire({
+        //         position: 'center',
+        //         icon: 'error',
+        //         title: 'Checkout gagal, silahkan periksa kembali koneksi anda',
+        //         showConfirmButton: false,
+        //         timer: 1500
+        //     })
+        // }
+        //
+        // setTimeout(()=> {
+        //     document.getElementById('checkout').submit();
+        // }, 0)
     }
 </script>
 @include('partials/script')

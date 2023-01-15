@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CartDetail whereCartId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CartDetail whereMemberId($value)
  * @mixin \Eloquent
+ * @property int $book_id
+ * @method static \Illuminate\Database\Eloquent\Builder|CartDetail whereBookId($value)
  */
 class CartDetail extends Model
 {

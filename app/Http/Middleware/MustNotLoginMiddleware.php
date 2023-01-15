@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class AdminMiddleware
+class MustNotLoginMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,10 +17,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Session::get('role') == 'admin'){
+        if(!Session::has('role')){
             return $next($request);
         }else{
-            return redirect('/');
+            return redirect('/dashboard');
         }
     }
 }

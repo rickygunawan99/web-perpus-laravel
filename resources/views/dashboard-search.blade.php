@@ -31,42 +31,8 @@
     </section>
 
     <section class="container margin-t2">
-        <div class="card">
-            <h2>Kategori</h2>
-            <section class="margin-t1">
-                <div class="row">
-                    @foreach($categories as $category)
-                        <div class="col card margin-r1 bg-primary bg-opacity-10 border border-2 border-primary rounded-end">
-                            {{$category->category_name}}
-                        </div>
-                    @endforeach
-
-                </div>
-            </section>
-            <div class="margin-t1">
-            </div>
-        </div>
-    </section>
-
-    <section class="container margin-t2">
         <div class="margin-l2 margin-r2">
-
-            <h2>Rekomendasi Buku</h2>
-            <div class="horizontal-scroll-body">
-                <div class="container horizontal-scroll-wrapper">
-                    <div class="d-flex flex-wrap">
-                        @foreach($book_recomendation as $book)
-                            @include('book-card')
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="container margin-t2">
-        <div class="margin-l2 margin-r2">
-            <h2>Buku Lainnya</h2>
+            <h2>Buku dengan judul yang sama</h2>
             <div class="horizontal-scroll-body">
                 <div class="container horizontal-scroll-wrapper">
                     <div class="d-flex flex-wrap">
