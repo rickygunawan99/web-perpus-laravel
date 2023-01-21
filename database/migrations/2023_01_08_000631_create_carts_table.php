@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedInteger('total_day')->default(1);
             $table->boolean('is_checkout')->default(false);
             $table->enum('is_approve', ['pending','approve','decline', 'returned'])->default('pending');
+            $table->timestamp('created_at')->nullable();
             $table->softDeletes();
         });
     }

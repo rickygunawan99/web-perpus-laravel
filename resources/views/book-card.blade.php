@@ -9,7 +9,11 @@
             <div class="card-text-container">
                 <h3 class="card-title">{{$book->title}}</h3>
                 <div class="card-inner-text-container">
-                    {{$book->description}}
+                    <div class="row">
+                        <div class="col-2 text-truncate" style="width: 100%">
+                            {{$book->description}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

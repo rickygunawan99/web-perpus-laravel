@@ -31,7 +31,9 @@
             <div class="text">Description </div>
         </div>
         <div class="book-desc">
-            <div class="text">Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem, ipsum dolor.</div>
+            <div class="text">
+                {{$book->description}}
+            </div>
         </div>
         <div class="detail-info">
             <div class="text bold">Detail Buku</div>

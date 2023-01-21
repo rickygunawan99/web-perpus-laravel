@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    @include('admin.partials.style-part');
+    @include('admin.partials.style-part')
 
     <title>Admin</title>
 </head>
 
 <body>
-@include('admin.partials.navbar-part');
+@include('admin.partials.navbar-part')
 
     <div class="container mt-4">
         <section class="text-center">

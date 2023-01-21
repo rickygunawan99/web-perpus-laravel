@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Cart;
 use App\Models\Member;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -64,6 +65,7 @@ class MemberController extends Controller
         if($cart){
             $cart->is_checkout = true;
             $cart->total_day = $request->input('total-borrow');
+            $cart->created_at = Carbon::now();
             $cart->push();
             return redirect('/')->with('success', 'Checkout berhasil, nomor peminjaman adalah ' . $cart->id);
         }else{
