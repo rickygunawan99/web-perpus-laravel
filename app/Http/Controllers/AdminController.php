@@ -23,7 +23,12 @@ class AdminController extends Controller
 {
     public function index(Request $request): View
     {
-        return view('admin.dashboard', [
+        return view('admin.dashboard');
+    }
+
+    public function books(Request $request): View
+    {
+        return view('admin.all-books', [
             'books' => Book::with('author')->with('publisher')->with('category')->cursorPaginate(10)
         ]);
     }
@@ -95,7 +100,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function confirm(Cart $cart)
+    public function confirm(Cart $cart): View
     {
         return view('admin.confirm', [
            'cart' => $cart
@@ -154,9 +159,14 @@ class AdminController extends Controller
 
     public function cartDetail(Cart $cart): View
     {
-        return view('admin.cart-detail', [
+        return view('admin.cart-return-detail', [
             'cart' => $cart
         ]);
+    }
+
+    public function chart(): View
+    {
+        return view('admin.chart');
     }
 
     public function doLogout(): RedirectResponse

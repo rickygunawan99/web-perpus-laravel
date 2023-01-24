@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/test', function (){
+    return view('admin.dashboard-new');
+});
 Route::get('/api/chart/{year}', [\App\Http\Controllers\ApiController::class, 'chartMonthly']);
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 Route::get('/book/detail/{id}', [\App\Http\Controllers\HomeController::class, 'detailBook'])
@@ -25,6 +29,7 @@ Route::middleware(\App\Http\Middleware\MustNotLoginMiddleware::class)->group(fun
 
     Route::get('/admin/login', [\App\Http\Controllers\AdminController::class, 'login']);
     Route::post('/admin/login', [\App\Http\Controllers\AdminController::class, 'doLogin']);
+
 });
 
 Route::middleware(\App\Http\Middleware\MemberMiddleware::class)->group(function (){
@@ -55,4 +60,10 @@ Route::middleware(\App\Http\Middleware\AdminMiddleware::class)->group(function (
     ->name('admin.carts');
     Route::get('/admin/carts/detail/{cart}', [\App\Http\Controllers\AdminController::class, 'cartDetail'])
         ->name('admin.cart.detail');
+    Route::post('/admin/carts/detail/{cart}', [\App\Http\Controllers\AdminController::class, 'cartDetailStore'])
+        ->name('admin.cart.detail.store');
+
+    Route::get('/admin/books', [\App\Http\Controllers\AdminController::class, 'books']);
+    Route::get('/admin/chart', [\App\Http\Controllers\AdminController::class, 'chart'])
+    ->name('admin.chart');
 });
