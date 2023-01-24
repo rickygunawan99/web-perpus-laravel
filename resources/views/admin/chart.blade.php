@@ -35,7 +35,7 @@
                 <div class="container">
                     <button class="btn btn-secondary mt-2" type="button" id="viewChart">View Chart</button>
                     <div class="container d-flex mt-3">
-                        <div class="container h-50 my-auto" id="panel-input-month"></div>
+                        <div class="container h-50 my-auto" id="panel-input-year"></div>
                         <div class="container" id="panel-chart"></div>
                     </div>
                 </div>
@@ -48,7 +48,17 @@
 
 @include('admin.partials.script-part')
 <script>
+
+    function clear()
+    {
+        const input = document.getElementById('panel-input-year');
+        while(input.hasChildNodes()){
+            input.firstChild.remove();
+        }
+    }
+
     document.getElementById('viewChart').onclick = () => {
+        clear();
         const year = document.createElement('input');
         year.type = 'number';
         year.min = '1900';
@@ -62,8 +72,8 @@
         submit.classList.add('ms-2');
         submit.textContent = 'submit';
         submit.id = 'year-submit';
-        document.getElementById('panel-input-month').appendChild(year);
-        document.getElementById('panel-input-month').appendChild(submit);
+        document.getElementById('panel-input-year').appendChild(year);
+        document.getElementById('panel-input-year').appendChild(submit);
 
         document.getElementById('year-submit').onclick = () => {
             while (document.getElementById('panel-chart').hasChildNodes()){

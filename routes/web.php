@@ -51,7 +51,7 @@ Route::middleware(\App\Http\Middleware\AdminMiddleware::class)->group(function (
 
     Route::post('/book/destroy', [\App\Http\Controllers\AdminController::class, 'destroyBook'])->name('book.destroy');
     Route::get('/book/update/{id}', [\App\Http\Controllers\AdminController::class, 'updateBook'])->name('book.update');
-    Route::post('/book/update/{id}', [\App\Http\Controllers\AdminController::class, 'updateBook'])->name('book.update.store');
+    Route::post('/book/update/{id}', [\App\Http\Controllers\AdminController::class, 'doUpdateBook'])->name('book.update.store');
 
     Route::get('/approve', [\App\Http\Controllers\AdminController::class, 'approve'])->name('admin.approve');
     Route::get('/confirm/{cart}', [\App\Http\Controllers\AdminController::class, 'confirm'])->name('admin.confirm');

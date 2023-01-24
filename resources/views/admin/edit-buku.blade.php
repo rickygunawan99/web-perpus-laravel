@@ -40,7 +40,7 @@
                                     <h2>EDIT BUKU</h2>
                                 </section>
 
-                                <form action="{{route('book.update', ['id'=>$book->id_book])}}" method="POST">
+                                <form action="{{route('book.update.store', ['id'=>$book->id_book])}}" method="POST">
                                     <div class="mb-3">
                                         <label for="judulBuku" class="form-label @error('judul-buku') is-invalid @enderror"><b>Judul Buku</b></label>
                                         <input type="text" name="judul-buku" class="form-control" id="judulBuku" placeholder="Masukan Judul Buku" value=" {{$book->title ?? ''}}">
@@ -68,7 +68,7 @@
                                                 <label for="kategori" class="form-label "><b>Kategori Buku</b></label>
                                                 <select class="form-select" aria-label="Kategori" name="kategori">
                                                     @foreach($categories as $category)
-                                                        <option value="{{$category->id_category}}" selected=" {{$book->category->name ?? ''}}">{{$category->category_name}}</option>
+                                                        <option value="{{$category->id_category}}" selected="{{$book->category->name}}">{{$category->category_name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -80,7 +80,7 @@
                                         @foreach($book->author as $author)
                                             <div class="mb-3">
                                                 <label class="form-label @error('nama-penerbit') is-invalid @enderror"><b>Nama Penulis</b></label>
-                                                <input type="text" name="nama-penerbit" class="form-control" placeholder="Masukan Nama Penerbit" value="{{$author->name ?? ''}}">
+                                                <input type="text" name="nama-penulis" class="form-control" placeholder="Masukan Nama Penerbit" value="{{$author->name ?? ''}}">
                                                 @error('nama-penerbit')
                                                 <div class="invalid-feedback">
                                                     <p>{{ $message }}</p>
@@ -94,7 +94,7 @@
                                     {{--            </div>--}}
                                     <div class="mb-3 penulis-input">
                                         <label class="form-label @error('nama-penulis-1') is-invalid @enderror"><b>Nama Penerbit</b></label>
-                                        <input type="text" name="nama-penulis-1" class="form-control" placeholder="Masukan Nama Penulis" value=" {{$book->publisher->name ?? ''}}">
+                                        <input type="text" name="nama-penerbit" class="form-control" placeholder="Masukan Nama Penulis" value=" {{$book->publisher->name ?? ''}}">
                                         @error('nama-penulis-1')
                                         <div class="invalid-feedback">
                                             <p>{{ $message }}</p>

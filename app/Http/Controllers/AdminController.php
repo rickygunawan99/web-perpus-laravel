@@ -16,6 +16,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -90,6 +91,28 @@ class AdminController extends Controller
             'book' => $book,
             'categories' => $categories
         ]);
+    }
+
+    public function doUpdateBook(StoreBookRequest $request, $id): RedirectResponse
+    {
+        try {
+            $validated = $request->all();
+            $publisher = Publisher::where("name", $validated['nama-penerbit'])->firstOrCreate([
+                'name' => $validated['nama-penerbit']
+            ]);
+
+            $book = Book::findOrFail($id);
+            $book->title = $validated['judul-buku'];
+            $book->total_page = $validated['jml-halaman'];
+            $book->category()->associate(Category::where('id_category', $validated['kategori'])->first());
+
+            $book->publisher()->associate($publisher);
+            $book->push();
+
+            return redirect()->action([AdminController::class, 'updateBook'], ['id'=>$id])->with('success', 'update buku berhasil');
+        }catch (Exception $exception){
+            return redirect()->action([AdminController::class, 'updateBook'], ['id'=>$id])->with('failed', $exception->getMessage());
+        }
     }
 
     public function approve(Request $request): View
