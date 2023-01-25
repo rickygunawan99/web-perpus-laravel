@@ -31,6 +31,17 @@
     @include('admin.partials.sidebar-part', ['add_book' => 'true'])
 
     <div class="main">
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+            <a class="sidebar-toggle js-sidebar-toggle">
+                <i class="hamburger align-self-center"></i>
+            </a>
+
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav navbar-align">
+                    <li class="nav-item dropdown">
+                </ul>
+            </div>
+        </nav>
         <main class="content">
             <div class="container-fluid p-0">
                 @if(Session::has('success'))
@@ -52,12 +63,22 @@
                                     <h2>TAMBAH BUKU</h2>
                                 </section>
 
-                                <form action="{{route("admin.add-book")}}" method="POST" name="authors">
+                                <form action="{{route("admin.add-book")}}" method="POST" name="authors" enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <label for="judulBuku" class="form-label @error('judul-buku') is-invalid @enderror"><b>Judul Buku</b></label>
                                         <input type="text" name="judul-buku" class="form-control" id="judulBuku" placeholder="Masukan Judul Buku"
                                                value="{{old('judul-buku') ?? ''}}">
                                         @error('judul-buku')
+                                        <div class="invalid-feedback">
+                                            <p>{{ $message }}</p>
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="judulBuku" class="form-label @error('judul-buku') is-invalid @enderror"><b>Deskripsi Buku</b></label>
+                                        <textarea name="deskripsi" class="form-control" id="deskripsi" placeholder="Masukan Deskripsi"
+                                                  value="{{old('deskripsi') ?? ''}}"></textarea>
+                                        @error('deskripsi')
                                         <div class="invalid-feedback">
                                             <p>{{ $message }}</p>
                                         </div>

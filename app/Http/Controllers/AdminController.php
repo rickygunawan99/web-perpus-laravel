@@ -29,8 +29,16 @@ class AdminController extends Controller
 
     public function books(Request $request): View
     {
+        $book = Book::with('author')->with('publisher')->with('category')->cursorPaginate(10);
+        if($request->input('s') !== null){
+            $book = Book::with('author')
+                ->with('publisher')
+                ->with('category')
+                ->where('title', 'like', "%{$request->input('s')}%")
+                ->cursorPaginate(10);
+        }
         return view('admin.all-books', [
-            'books' => Book::with('author')->with('publisher')->with('category')->cursorPaginate(10)
+            'books' => $book
         ]);
     }
 
@@ -49,6 +57,12 @@ class AdminController extends Controller
         $book = new Book();
         $book->title = $validated['judul-buku'];
         $book->total_page = $validated['jml-halaman'];
+
+        $image = $request->file('image-upload');
+        $book->description = $request->input('deskripsi');
+
+        $image->storePubliclyAs('img', $image->getClientOriginalName(), 'public');
+        $book->path_img = $image->getClientOriginalName();
 
         $category = Category::where("id_category", $validated['kategori'])->first();
 

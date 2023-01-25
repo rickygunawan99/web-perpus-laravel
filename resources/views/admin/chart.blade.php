@@ -34,11 +34,9 @@
             <div class="container-fluid p-0">
                 <div class="container">
                     <button class="btn btn-secondary mt-2" type="button" id="viewChart">View Chart</button>
-                    <div class="container d-flex mt-3">
-                        <div class="container h-50 my-auto" id="panel-input-year"></div>
-                        <div class="container" id="panel-chart"></div>
-                    </div>
+                    <div class="container h-50 my-auto mt-4" id="panel-input-year"></div>
                 </div>
+                <div class="container" id="panel-chart"></div>
             </div>
         </main>
     </div>
@@ -59,21 +57,29 @@
 
     document.getElementById('viewChart').onclick = () => {
         clear();
+        const div = document.createElement('div');
+        div.classList.add('input-group');
+        div.classList.add('mb-3');
+        div.classList.add('w-50');
         const year = document.createElement('input');
         year.type = 'number';
         year.min = '1900';
-        year.placeholder = 'Input tahun';
+        year.placeholder = 'Year';
         year.id = 'year-value';
+        year.classList.add('form-control');
         const submit = document.createElement('button');
         submit.type = 'button';
         submit.classList.add('btn');
         submit.classList.add('btn-primary');
         submit.classList.add('btn-sm');
         submit.classList.add('ms-2');
+        submit.classList.add('rounded-3');
         submit.textContent = 'submit';
         submit.id = 'year-submit';
-        document.getElementById('panel-input-year').appendChild(year);
-        document.getElementById('panel-input-year').appendChild(submit);
+
+        div.appendChild(year);
+        div.appendChild(submit);
+        document.getElementById('panel-input-year').appendChild(div);
 
         document.getElementById('year-submit').onclick = () => {
             while (document.getElementById('panel-chart').hasChildNodes()){
@@ -109,22 +115,25 @@
                 const canvas = document.createElement('canvas');
                 canvas.id = 'myChart';
                 canvas.classList.add('chartjs-bar');
-
                 new Chart(canvas, {
                     type: 'bar',
+
                     data: {
                         labels: month,
                         datasets: [{
-                            label: 'Peminjaman tahun ' + year,
+                            label: 'Total peminjaman tahun ' + year,
                             data: value,
-                            borderWidth: 2
+                            borderWidth: 1,
+                            backgroundColor: '#9BE0FF',
                         }]
                     },
                     options: {
                         scales: {
-                            y: {
-                                beginAtZero: true
-                            }
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
                         }
                     }
                 });

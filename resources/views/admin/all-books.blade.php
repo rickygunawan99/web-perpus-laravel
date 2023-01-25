@@ -31,6 +31,17 @@
     @include('admin.partials.sidebar-part', ['all_book' => 'true'])
 
     <div class="main">
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+            <a class="sidebar-toggle js-sidebar-toggle">
+                <i class="hamburger align-self-center"></i>
+            </a>
+
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav navbar-align">
+                    <li class="nav-item dropdown">
+                </ul>
+            </div>
+        </nav>
         <main class="content">
             <div class="container-fluid p-0">
                 @if(Session::has('success'))
@@ -44,10 +55,15 @@
                         {{Session::get('failed')}}
                     </div>
                 @endif
-                <h1 class="h3">Dashboard</h1>
                 <div class="row">
                     <div class="row">
-                        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+                        <form action="" method="get">
+                            <div class="input-group mb-3 w-50 ms-auto">
+                                <input type="text" name="s" class="form-control border rounded-3" placeholder="Nama buku" aria-label="book-name" aria-describedby="basic-addon1">
+                                <input type="submit" class="btn btn-primary border rounded-3 ms-2">
+                            </div>
+                        </form>
+                        <div class="col-12 col-md-12 col-xxl-12 d-flex order-3 order-xxl-2">
                             <div class="card flex-fill">
                                 <div class="card-header">
                                     <h5 class="card-title mb-0">All Books</h5>
