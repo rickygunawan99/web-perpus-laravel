@@ -20,6 +20,8 @@ return new class extends Migration
             $table->boolean('is_checkout')->default(false);
             $table->enum('is_approve', ['pending','approve','decline', 'returned'])->default('pending');
             $table->timestamp('created_at')->nullable();
+            $table->integer('biaya');
+            $table->integer('denda')->default(0);
             $table->softDeletes();
         });
     }

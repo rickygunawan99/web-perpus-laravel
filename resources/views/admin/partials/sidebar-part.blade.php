@@ -51,6 +51,16 @@
                     <span class="align-middle">Chart</span>
                 </a>
             </li>
+
+            <li class="sidebar-item">
+                <form action="{{route('admin.logout')}}" method="post">
+                    <button class="btn border-0 sidebar-link" type="submit">
+                        <i class="align-middle" data-feather="bar-exit"></i>
+                        <span class="align-middle">Logout</span>
+                    </button>
+                    @csrf
+                </form>
+            </li>
         </ul>
     </div>
 </nav>

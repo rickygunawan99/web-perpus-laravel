@@ -59,7 +59,7 @@
                     <div class="row">
                         <form action="" method="get">
                             <div class="input-group mb-3 w-50 ms-auto">
-                                <input type="text" name="s" class="form-control border rounded-3" placeholder="Nama buku" aria-label="book-name" aria-describedby="basic-addon1">
+                                <input type="text" name="s" class="form-control border rounded-3" autocomplete="off" placeholder="Nama buku" aria-label="book-name" aria-describedby="basic-addon1">
                                 <input type="submit" class="btn btn-primary border rounded-3 ms-2">
                             </div>
                         </form>

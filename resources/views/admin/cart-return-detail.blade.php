@@ -60,6 +60,11 @@
                         </section>
 
                         <div class="mb-3">
+                            <label class="form-label"><b>Biaya Peminjaman</b></label>
+                            <input type="number" name="biaya" class="form-control" placeholder="Masukan biaya peminjaman">
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label"><b>Denda</b></label>
                             <input type="number" name="denda" class="form-control" placeholder="Masukan denda jika ada">
                         </div>

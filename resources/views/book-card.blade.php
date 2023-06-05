@@ -10,7 +10,7 @@
                 <h3 class="card-title">{{$book->title}}</h3>
                 <div class="card-inner-text-container">
                     <div class="row">
-                        <div class="col-2 text-truncate" style="width: 100%">
+                        <div class="col-2 text-truncate" style="width: 100%; max-lines: 4">
                             {{$book->description}}
                         </div>
                     </div>

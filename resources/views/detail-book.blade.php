@@ -97,7 +97,7 @@
                         timer: 1500
                     })
                 }else{
-                    alert('failed')
+                    window.location.href = '/login';
                 }
             }
         })

@@ -33,8 +33,10 @@
         <main class="content">
             <div class="container-fluid p-0">
                 <div class="container">
-                    <button class="btn btn-secondary mt-2" type="button" id="viewChart">View Chart</button>
-                    <div class="container h-50 my-auto mt-4" id="panel-input-year"></div>
+{{--                    <button class="btn btn-secondary mt-2" type="button" id="viewChart">View Chart</button>--}}
+                    <div class="container h-50 my-auto mt-4" id="panel-input-year">
+
+                    </div>
                 </div>
                 <div class="container" id="panel-chart"></div>
             </div>
@@ -55,8 +57,8 @@
         }
     }
 
-    document.getElementById('viewChart').onclick = () => {
-        clear();
+    // document.getElementById('viewChart').onclick = () => {
+    //     clear();
         const div = document.createElement('div');
         div.classList.add('input-group');
         div.classList.add('mb-3');
@@ -87,7 +89,7 @@
             }
             viewChart(document.getElementById('year-value').value);
         }
-    }
+    // }
 
     async function chartData(year)
     {
@@ -121,7 +123,7 @@
                     data: {
                         labels: month,
                         datasets: [{
-                            label: 'Total peminjaman tahun ' + year,
+                            label: 'Peminjaman buku tahun ' + year,
                             data: value,
                             borderWidth: 1,
                             backgroundColor: '#9BE0FF',

@@ -24,7 +24,7 @@ class HomeController extends Controller
             ]);
         }else{
             $search = $request->input('s');
-            return \view('dashboard-search', [
+            return view('dashboard-search', [
                'books' => Book::where('title','like', "%{$search}%")->get()
             ]);
         }

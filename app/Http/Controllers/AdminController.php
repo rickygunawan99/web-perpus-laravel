@@ -201,6 +201,14 @@ class AdminController extends Controller
         ]);
     }
 
+    public function cartDetailStore(Request $request, Cart $cart)
+    {
+        $cart->biaya = $request->input('biaya');
+        $cart->denda = $request->input('denda') ?? 0;
+        $cart->save();
+        return redirect()->to('/admin')->with('success', 'Sukses konfirmasi pengembalian');
+    }
+
     public function chart(): View
     {
         return view('admin.chart');
