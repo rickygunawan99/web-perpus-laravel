@@ -37,7 +37,7 @@
                     <!-- Email input -->
                     <div class="form-outline mb-4">
                         <input type="email" id="form3Example3" class="form-control form-control-lg"
-                               placeholder="NIP" name="email"/>
+                               placeholder="Email" name="email" autocomplete="off"/>
                         <label class="form-label" for="form3Example3">email</label>
                     </div>
 
@@ -47,6 +47,11 @@
                                placeholder="Enter password" name="password" />
                         <label class="form-label" for="form3Example4">Password</label>
                     </div>
+
+                    <span>
+                        atau <br>
+                        <a href="/register">Daftar sebagai member</a>
+                    </span>
 
                     {{--                    <div class="d-flex justify-content-between align-items-center">--}}
                     {{--                        <!-- Checkbox -->--}}

@@ -134,18 +134,18 @@
                                         @enderror
                                     </div>
 
-                                    <div class="mb-3">
-                                        <div class="row w-50">
-                                            <div class="">
-                                                <img id="thumb" src="{{asset('/storage/upload.jpg')}}" width="200" height="300">
-                                                <input type="file" class="form-control mt-2" onchange="preview()" name="image-upload" id="image-upload">
-                                            </div>
-                                        </div>
-                                    </div>
+{{--                                    <div class="mb-3">--}}
+{{--                                        <div class="row w-50">--}}
+{{--                                            <div class="">--}}
+{{--                                                <img id="thumb" src="{{asset('/storage/upload.jpg')}}" width="200" height="300">--}}
+{{--                                                <input type="file" class="form-control mt-2" onchange="preview()" name="image-upload" id="image-upload">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
 
-                                    <div class="mt-5 text-center">
-                                        <button type="submit" name="simpan-buku-submit" class="btn btn-success">Simpan</button>
-                                    </div>
+{{--                                    <div class="mt-5 text-center">--}}
+{{--                                        <button type="submit" name="simpan-buku-submit" class="btn btn-success">Simpan</button>--}}
+{{--                                    </div>--}}
                                     @csrf
                                 </form>
                             </div>

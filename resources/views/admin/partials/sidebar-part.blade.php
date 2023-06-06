@@ -31,6 +31,13 @@
                 </a>
             </li>
 
+            <li class="sidebar-item @isset($add_member) active @endisset">
+                <a class="sidebar-link" href="{{route('admin.add-member')}}">
+                    <i class="align-middle" data-feather="user-plus"></i>
+                    <span class="align-middle">Daftarkan member</span>
+                </a>
+            </li>
+
             <li class="sidebar-item  @isset($confirm_borrow) active @endisset">
                 <a class="sidebar-link" href="{{route('admin.approve')}}">
                     <i class="align-middle" data-feather="check-circle"></i>
@@ -52,15 +59,13 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <form action="{{route('admin.logout')}}" method="post">
-                    <button class="btn border-0 sidebar-link" type="submit">
-                        <i class="align-middle" data-feather="bar-exit"></i>
-                        <span class="align-middle">Logout</span>
-                    </button>
-                    @csrf
-                </form>
+            <li class="sidebar-item  @isset($chart) active @endisset">
+                <a class="sidebar-link" href="{{route('admin.logout')}}">
+                    <i class="align-middle" data-feather="log-out"></i>
+                    <span class="align-middle">Logout</span>
+                </a>
             </li>
+
         </ul>
     </div>
 </nav>

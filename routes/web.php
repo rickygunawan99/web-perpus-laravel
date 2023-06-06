@@ -31,6 +31,8 @@ Route::middleware(\App\Http\Middleware\MustNotLoginMiddleware::class)->group(fun
     Route::get('/admin/login', [\App\Http\Controllers\AdminController::class, 'login']);
     Route::post('/admin/login', [\App\Http\Controllers\AdminController::class, 'doLogin']);
 
+    Route::get('/register', [\App\Http\Controllers\HomeController::class, 'register'])->name('register');
+    Route::post('/register', [\App\Http\Controllers\HomeController::class, 'doRegister'])->name('register.store');
 });
 
 Route::middleware(\App\Http\Middleware\MemberMiddleware::class)->group(function (){
@@ -48,7 +50,9 @@ Route::middleware(\App\Http\Middleware\AdminMiddleware::class)->group(function (
     Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index']);
     Route::get('/admin/add/book', [\App\Http\Controllers\AdminController::class, 'addBook'])->name('admin.add-book');
     Route::post('/admin/add/book', [\App\Http\Controllers\AdminController::class, 'doAddBook'])->name('admin.do-add-book');
-    Route::post('/admin/logout', [\App\Http\Controllers\AdminController::class, 'doLogout'])->name('admin.logout');
+    Route::get('/admin/add/member', [\App\Http\Controllers\AdminController::class, 'addMember'])->name('admin.add-member');
+    Route::post('/admin/add/member', [\App\Http\Controllers\AdminController::class, 'doAddMember'])->name('admin.do-add-member');
+    Route::get('/admin/logout', [\App\Http\Controllers\AdminController::class, 'doLogout'])->name('admin.logout');
 
     Route::post('/book/destroy', [\App\Http\Controllers\AdminController::class, 'destroyBook'])->name('book.destroy');
     Route::get('/book/update/{id}', [\App\Http\Controllers\AdminController::class, 'updateBook'])->name('book.update');

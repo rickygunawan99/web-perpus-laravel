@@ -37,7 +37,7 @@
                     <!-- Email input -->
                     <div class="form-outline mb-4">
                         <input type="text" id="form3Example3" class="form-control form-control-lg"
-                               placeholder="NIP" name="nip"/>
+                               placeholder="NIP" name="nip" autocomplete="off"/>
                         <label class="form-label" for="form3Example3">NIP</label>
                     </div>
 

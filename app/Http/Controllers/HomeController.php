@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Member;
@@ -70,5 +71,20 @@ class HomeController extends Controller
         }else{
             return redirect('/');
         }
+    }
+
+    public function register()
+    {
+        return view('register');
+    }
+
+    public function doRegister(RegisterRequest $request)
+    {
+        $validated = $request->validated();
+
+        Member::create($validated);
+
+        return redirect('/login')
+            ->with(['success' => 'registrasi berhasil, silahkan login']);
     }
 }

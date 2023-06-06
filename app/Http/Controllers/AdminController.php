@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\StoreBookRequest;
 use App\Models\Admin;
 use App\Models\Author;
@@ -61,8 +62,8 @@ class AdminController extends Controller
         $image = $request->file('image-upload');
         $book->description = $request->input('deskripsi');
 
-        $image->storePubliclyAs('img', $image->getClientOriginalName(), 'public');
-        $book->path_img = $image->getClientOriginalName();
+//        $image->storePubliclyAs('img', $image->getClientOriginalName(), 'public');
+//        $book->path_img = $image->getClientOriginalName();
 
         $category = Category::where("id_category", $validated['kategori'])->first();
 
@@ -218,5 +219,20 @@ class AdminController extends Controller
     {
         session()->flush();
         return redirect('/');
+    }
+
+    public function addMember()
+    {
+        return \view('admin.tambah-member');
+    }
+
+    public function doAddMember(RegisterRequest $request)
+    {
+        $validated = $request->validated();
+
+        Member::create($validated);
+
+        return redirect()->route('admin.add-member')
+            ->with(['success' => 'akun berhasil dibuat']);
     }
 }
