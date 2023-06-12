@@ -33,6 +33,12 @@ Route::middleware(\App\Http\Middleware\MustNotLoginMiddleware::class)->group(fun
 
     Route::get('/register', [\App\Http\Controllers\HomeController::class, 'register'])->name('register');
     Route::post('/register', [\App\Http\Controllers\HomeController::class, 'doRegister'])->name('register.store');
+
+    Route::get('reset-password', [\App\Http\Controllers\ResetPasswordController::class, 'index'])->name('reset-password');
+    Route::post('reset-password', [\App\Http\Controllers\ResetPasswordController::class, 'store'])->name('reset-password.store');
+
+    Route::get('confirm-password', [\App\Http\Controllers\ConfirmResetPasswordController::class, 'index'])->name('confirm-reset.index');
+    Route::post('confirm-password', [\App\Http\Controllers\ConfirmResetPasswordController::class, 'store'])->name('confirm-reset.store');;
 });
 
 Route::middleware(\App\Http\Middleware\MemberMiddleware::class)->group(function (){

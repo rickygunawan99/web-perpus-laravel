@@ -8,6 +8,11 @@
         border-radius: 9px;
     }
 
+    #search:focus-within {
+        border-color: #80bdff;
+        box-shadow: none;
+    }
+
     #login:hover{
         color: blue;
         background: white;
@@ -35,10 +40,10 @@
     <div class="nav-items">
         <ul class="overview">
             <form action="" method="get">
-                <div class="wrap-nav">
-                    <div class="search-nav">
-                        <input type="text" class="searchForm-nav" placeholder="Cari Apa ?" name="s" autocomplete="off">
-                        <button type="submit" class="searchButton-nav">
+                <div class="wrap-nav" style="width: 40%">
+                    <div class="input-group flex-nowrap">
+                        <input type="text" class="form-control" name="s" id="search" placeholder="Cari apa?" autocomplete="off" aria-label="search" aria-describedby="addon-wrapping">
+                        <button type="button" class="input-group-text" id="addon-wrapping">
                             <i class="bi bi-search"></i>
                         </button>
                     </div>

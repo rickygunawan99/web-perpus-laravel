@@ -45,6 +45,23 @@
         </div>
     </section>
 
+    @isset($byAuthor)
+        <section class="container margin-t2">
+            <div class="margin-l2 margin-r2">
+                <h2>Buku dengan author yang dicari</h2>
+                <div class="horizontal-scroll-body">
+                    <div class="container horizontal-scroll-wrapper">
+                        <div class="d-flex flex-wrap">
+                            @foreach($byAuthor as $book)
+                                @include('book-card')
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endisset
+
 </div>
 
 @include('partials/footer')

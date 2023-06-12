@@ -25,8 +25,13 @@ class HomeController extends Controller
             ]);
         }else{
             $search = $request->input('s');
+
+            $byAuthor =  Book::whereHas('author', function ($query) use ($search) {
+               return $query->where('name', 'LIKE', "%$search%");
+            })->get();
             return view('dashboard-search', [
-               'books' => Book::where('title','like', "%{$search}%")->get()
+               'books' => Book::where('title','like', "%{$search}%")->get(),
+               'byAuthor' => $byAuthor
             ]);
         }
     }

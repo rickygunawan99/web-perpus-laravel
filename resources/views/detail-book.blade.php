@@ -92,13 +92,21 @@
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
-                        title: 'Buku berhasil ditambahkan',
+                        title: data.message,
                         showConfirmButton: false,
-                        timer: 1500
                     })
                 }else{
                     window.location.href = '/login';
                 }
+            },
+            error: function (data){
+                const response = JSON.parse(data.responseText)
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: response.message,
+                    showConfirmButton: false,
+                })
             }
         })
 

@@ -143,9 +143,9 @@
 {{--                                        </div>--}}
 {{--                                    </div>--}}
 
-{{--                                    <div class="mt-5 text-center">--}}
-{{--                                        <button type="submit" name="simpan-buku-submit" class="btn btn-success">Simpan</button>--}}
-{{--                                    </div>--}}
+                                    <div class="mt-5 text-center">
+                                        <button type="submit" name="simpan-buku-submit" class="btn btn-success">Simpan</button>
+                                    </div>
                                     @csrf
                                 </form>
                             </div>

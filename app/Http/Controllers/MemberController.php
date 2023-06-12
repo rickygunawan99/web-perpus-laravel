@@ -22,16 +22,28 @@ class MemberController extends Controller
     private function addToCart($book_id): JsonResponse
     {
         $cart = Cart::where('member_id', Session::get('id'))
+            ->withCount('books')
             ->where('is_checkout', false)->first();
 
-        if(!$cart){
+        $isExist = $cart->books()->where('book_id', $book_id)->first();
+
+        if($isExist){
+            return response()->json(['status' => 'oke', 'message' => 'Buku sudah berada di keranjang'], 200);
+        }
+
+        if($cart->books_count >= 3){
+            return response()
+                ->json(['status' => 'err', 'message' => 'Buku gagal ditambahkan karena melebihi 3'], 422);
+        }
+
+        if(!$cart) {
             $member = Member::find(Session::get('id'));
             $cart = new Cart();
             $cart->member()->associate($member);
             $cart->save();
         }
         $cart->books()->syncWithoutDetaching($book_id);
-        return response()->json(['status'=>'oke']);
+        return response()->json(['status' => 'oke', 'message' => 'Buku berhasil ditambahkan'], 200);
     }
 
     public function deleteFromCart(Request $request, $id): RedirectResponse

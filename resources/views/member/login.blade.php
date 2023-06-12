@@ -48,9 +48,9 @@
                         <label class="form-label" for="form3Example4">Password</label>
                     </div>
 
-                    <span>
-                        atau <br>
-                        <a href="/register">Daftar sebagai member</a>
+                    <span class="d-flex flex-column text-center">
+                        <p>atau</p>
+                        <a href="/register" class="mx-auto">Daftar sebagai member</a>
                     </span>
 
                     {{--                    <div class="d-flex justify-content-between align-items-center">--}}
@@ -68,6 +68,8 @@
                         <button type="submit" class="btn btn-primary btn-lg"
                                 style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
                     </div>
+
+                    <a href="{{route('reset-password')}}">Lupa Password </a>
                     @csrf
                 </form>
             </div>
