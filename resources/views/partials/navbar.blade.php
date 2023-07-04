@@ -20,14 +20,6 @@
 </style>
 
 <div class="head-nav">
-    <div class="">
-        <ul>
-            <li class="nav-head-link"><a href="default.asp">Home</a></li>
-            <li class="nav-head-link"><a href="news.asp">News</a></li>
-            <li class="nav-head-link"><a href="contact.asp">Contact</a></li>
-            <li class="nav-head-link"><a href="about.asp">About</a></li>
-        </ul>
-    </div>
 </div>
 <nav class="main-nav">
     <input type="checkbox" id="check" />

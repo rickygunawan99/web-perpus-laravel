@@ -53,13 +53,6 @@
             </li>
 
             <li class="sidebar-item  @isset($chart) active @endisset">
-                <a class="sidebar-link" href="{{route('admin.chart')}}">
-                    <i class="align-middle" data-feather="bar-chart"></i>
-                    <span class="align-middle">Chart</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item  @isset($chart) active @endisset">
                 <a class="sidebar-link" href="{{route('admin.logout')}}">
                     <i class="align-middle" data-feather="log-out"></i>
                     <span class="align-middle">Logout</span>
