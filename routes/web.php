@@ -17,6 +17,12 @@ use Illuminate\Support\Facades\Route;
 //    return view('admin.dashboard-new');
 //});
 
+Route::get('/mail/send', function (){
+    foreach (['hello@gmail.com', 'hello2@gmail.com'] as $email){
+        \App\Jobs\SendNotifEmailJob::dispatch($email);
+    }
+});
+
 Route::get('/api/chart/{year}', [\App\Http\Controllers\ApiController::class, 'chartMonthly']);
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 Route::get('/book/detail/{id}', [\App\Http\Controllers\HomeController::class, 'detailBook'])
