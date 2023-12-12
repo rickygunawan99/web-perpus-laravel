@@ -39,9 +39,9 @@ class ConfirmResetPasswordController extends Controller
 
         $validated = $validator->safe()->only(['new', 'confirm_new']);
 
-        $email = DB::table('password_resets')->where('email', session('email'))->first('email');
+        $email = DB::table('password_resets')->where('token', $request->input('token'))->first('email');
 
-        DB::table('password_resets')->where('email', $email->email)->delete();
+        DB::table('password_resets')->where('token', $request->input('token'))->delete();
 
         Member::where('email', $email->email)
             ->update([
@@ -49,6 +49,9 @@ class ConfirmResetPasswordController extends Controller
             ]);
 
         return redirect('/')
-            ->with(['success' => 'berhasil reset password']);
+            ->with([
+                'status' => 'success',
+                'message' => 'berhasil reset password'
+            ]);
     }
 }

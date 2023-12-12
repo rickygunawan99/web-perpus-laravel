@@ -70,7 +70,7 @@ Route::middleware(\App\Http\Middleware\AdminMiddleware::class)->group(function (
     Route::get('/admin/add/member', [\App\Http\Controllers\AdminController::class, 'addMember'])->name('admin.add-member');
     Route::post('/admin/add/member', [\App\Http\Controllers\AdminController::class, 'doAddMember'])->name('admin.do-add-member');
     Route::get('/admin/members', [\App\Http\Controllers\AdminController::class, 'member'])->name('admin.all-member');
-    Route::get('/admin/logout', [\App\Http\Controllers\AdminController::class, 'doLogout'])->name('admin.logout');
+    Route::post('/admin/logout', [\App\Http\Controllers\AdminController::class, 'doLogout'])->name('admin.logout');
 
     Route::post('/book/destroy', [\App\Http\Controllers\AdminController::class, 'destroyBook'])->name('book.destroy');
     Route::get('/book/update/{id}', [\App\Http\Controllers\AdminController::class, 'updateBook'])->name('book.update');

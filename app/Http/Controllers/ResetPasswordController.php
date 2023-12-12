@@ -17,8 +17,6 @@ class ResetPasswordController extends Controller
     {
         $email = $request->input('email');
 
-        session()->put('email', $email);
-
         $token = Str::uuid();
 
         DB::table('password_resets')
@@ -27,8 +25,6 @@ class ResetPasswordController extends Controller
                 'email' => $email
             ]);
 
-        return view('reset-password', [
-            'token' => $token
-        ]);
+        return redirect('/confirm-password?token=' . $token);
     }
 }

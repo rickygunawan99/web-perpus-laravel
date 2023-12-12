@@ -76,6 +76,7 @@ $containerNav = ($containerNav ?? 'container-xxl');
         <!--/ Content wrapper -->
       </div>
       <!-- / Layout page -->
+        @include('layouts/sections/flasher')
     </div>
     <!-- / Layout Container -->
   </div>

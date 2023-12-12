@@ -198,17 +198,16 @@ $navbarDetached = ($navbarDetached ?? '');
                             </li>
                             @if (Auth::guard('admin')->check())
                                 <li>
-                                    <a class="dropdown-item"
-                                       href=""
-                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        <i class='ti ti-logout me-2'></i>
-                                        <span class="align-middle">Logout</span>
-                                    </a>
+                                    <form method="POST" id="logout-form"
+                                          action="{{route('admin.logout')}}">
+                                        <button class="dropdown-item" type="submit">
+                                            <i class='ti ti-logout me-2'></i>
+                                            <span class="align-middle">Logout</span>
+                                        </button>
+                                        @csrf
+                                    </form>
                                 </li>
-                                <form method="POST" id="logout-form"
-                                      action="">
-                                    @csrf
-                                </form>
+
                             @endif
                         </ul>
                     </li>

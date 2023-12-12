@@ -1,4 +1,4 @@
-@extends('layouts.horizontalLayout')
+@extends('layouts/horizontalLayout')
 
 @section('vendor-style')
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/swiper/swiper.css')}}"/>
