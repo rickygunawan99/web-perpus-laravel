@@ -17,23 +17,22 @@ class HomeController extends Controller
 {
     public function index(Request $request): View
     {
-        if(!$request->input('s')){
-            return view('dashboard', [
-                'book_recomendation' => Book::limit(3)->get()->shuffle(),
-                'books' => Book::limit(6)->get()->shuffle(),
-                'categories' => Category::limit(5)->get()->shuffle()
-            ]);
-        }else{
+        $books = Book::query();
+        if($request->input('s')){
             $search = $request->input('s');
 
-            $byAuthor =  Book::whereHas('author', function ($query) use ($search) {
-               return $query->where('name', 'LIKE', "%$search%");
-            })->get();
-            return view('dashboard-search', [
-               'books' => Book::where('title','like', "%{$search}%")->get(),
-               'byAuthor' => $byAuthor
-            ]);
+            $books->where('title', 'LIKE', "%$search%")
+                ->orWhere('description', 'LIKE', "%$search%")
+                ->orWhereHas('author', function ($query) use ($search) {
+                    return $query->where('name', 'LIKE', "%$search%");
+                });
         }
+
+        $books = $books->paginate(5);
+
+        return view('dashboard', [
+            'books' => $books
+        ]);
     }
 
     public function detailBook($id): View
@@ -45,28 +44,30 @@ class HomeController extends Controller
 
     public function login(): View
     {
-        return view('member.login');
+        return view('login');
     }
 
     public function doLogin(Request $request): \Illuminate\Contracts\View\Factory|View|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
-        $validator = Validator::make($request->all(), [
+        $credentials = $request->validate([
             'email' => 'required|exists:members,email',
             'password' => 'required'
         ]);
 
-        if($validator->fails()){
-            return redirect('/login')->withErrors($validator);
-        }
-        $validated = $validator->safe()->all();
-        $member = Member::where('email', $validated['email'])->first();
+        if(Auth::guard('member')->attempt($credentials)){
+            $member = Auth::guard('member')->user();
 
-        if(!$member || !Hash::check($validated['password'], $member->password)){
-            return redirect('/login')->with('err', 'email and password not found');
+            Auth::guard('member')->login($member);
+
+            session(['role'=>'member', 'id'=>$member->id]);
+
+            return redirect()->intended();
         }
 
-        session(['role'=>'member', 'id'=>$member->id]);
-        return redirect('/');
+        return redirect('/login')->withErrors([
+            'email' => 'Email dan password tidak ditemukan'
+        ])->onlyInput('email');
+
     }
 
     public function dashboard()

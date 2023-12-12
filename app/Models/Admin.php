@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -32,12 +32,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Admin withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Admin withoutTrashed()
  */
-class Admin extends Model
+class Admin extends Authenticatable
 {
     use HasFactory;
     use SoftDeletes;
 
     public $timestamps = false;
+    protected $table = 'admins';
+    protected $primaryKey = 'id_admin';
 
     protected $guarded = [
       'id_admin'

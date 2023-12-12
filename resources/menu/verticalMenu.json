@@ -1,0 +1,34 @@
+{
+  "menu": [
+    {
+      "url": "/admin",
+      "name": "Dashboard",
+      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "slug": "admin.index"
+    },
+    {
+      "url": "/admin/books",
+      "icon": "menu-icon tf-icons ti ti-book",
+      "name": "Buku",
+      "slug": "admin.books"
+    },
+    {
+      "url": "/admin/members",
+      "name": "Member",
+      "icon": "menu-icon tf-icons ti ti-users",
+      "slug": "admin.all-member"
+    },
+    {
+      "url": "/admin/confirm",
+      "name": "Peminjaman",
+      "icon": "menu-icon tf-icons ti ti-files",
+      "slug": "admin.confirm"
+    },
+    {
+      "url": "/admin/return",
+      "name": "Pengembalian",
+      "icon": "menu-icon tf-icons ti ti-arrow-right",
+      "slug": "admin.return"
+    }
+  ]
+}

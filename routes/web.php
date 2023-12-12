@@ -17,6 +17,13 @@ use Illuminate\Support\Facades\Route;
 //    return view('admin.dashboard-new');
 //});
 
+
+Route::get('/mail/send', function (){
+    foreach (['hello@gmail.com', 'hello2@gmail.com'] as $email){
+        \App\Jobs\SendNotifEmailJob::dispatch($email);
+    }
+});
+
 Route::get('/api/chart/{year}', [\App\Http\Controllers\ApiController::class, 'chartMonthly']);
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 Route::get('/book/detail/{id}', [\App\Http\Controllers\HomeController::class, 'detailBook'])
@@ -50,31 +57,38 @@ Route::middleware(\App\Http\Middleware\MemberMiddleware::class)->group(function 
         ->name('cart.delete');
     Route::post('/cart/checkout', [\App\Http\Controllers\MemberController::class, 'checkout'])
         ->name('cart.checkout');
+
+    Route::get('/history', [\App\Http\Controllers\MemberController::class,  'history'])->name('history.index');
+
 });
 
+
 Route::middleware(\App\Http\Middleware\AdminMiddleware::class)->group(function (){
-    Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index']);
+    Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/add/book', [\App\Http\Controllers\AdminController::class, 'addBook'])->name('admin.add-book');
     Route::post('/admin/add/book', [\App\Http\Controllers\AdminController::class, 'doAddBook'])->name('admin.do-add-book');
     Route::get('/admin/add/member', [\App\Http\Controllers\AdminController::class, 'addMember'])->name('admin.add-member');
     Route::post('/admin/add/member', [\App\Http\Controllers\AdminController::class, 'doAddMember'])->name('admin.do-add-member');
+    Route::get('/admin/members', [\App\Http\Controllers\AdminController::class, 'member'])->name('admin.all-member');
     Route::get('/admin/logout', [\App\Http\Controllers\AdminController::class, 'doLogout'])->name('admin.logout');
 
     Route::post('/book/destroy', [\App\Http\Controllers\AdminController::class, 'destroyBook'])->name('book.destroy');
     Route::get('/book/update/{id}', [\App\Http\Controllers\AdminController::class, 'updateBook'])->name('book.update');
     Route::post('/book/update/{id}', [\App\Http\Controllers\AdminController::class, 'doUpdateBook'])->name('book.update.store');
 
-    Route::get('/approve', [\App\Http\Controllers\AdminController::class, 'approve'])->name('admin.approve');
-    Route::get('/confirm/{cart}', [\App\Http\Controllers\AdminController::class, 'confirm'])->name('admin.confirm');
+    Route::get('/admin/confirm', [\App\Http\Controllers\AdminController::class, 'confirmCart'])->name('admin.confirm');
+    Route::get('/admin/confirm/{cart}', [\App\Http\Controllers\AdminController::class, 'confirm'])->name('admin.confirmCart');
+
+
     Route::post('/confirm/{cart}', [\App\Http\Controllers\AdminController::class, 'doConfirm']);
-    Route::get('/admin/carts', [\App\Http\Controllers\AdminController::class, 'waitingCarts'])
-    ->name('admin.carts');
-    Route::get('/admin/carts/detail/{cart}', [\App\Http\Controllers\AdminController::class, 'cartDetail'])
+
+    Route::get('/admin/return', [\App\Http\Controllers\AdminController::class, 'confirmList'])->name('admin.return');
+    Route::get('/admin/return/{cart}', [\App\Http\Controllers\AdminController::class, 'cartDetail'])
         ->name('admin.cart.detail');
-    Route::post('/admin/carts/detail/{cart}', [\App\Http\Controllers\AdminController::class, 'cartDetailStore'])
+    Route::post('/admin/return/{cart}', [\App\Http\Controllers\AdminController::class, 'cartDetailStore'])
         ->name('admin.cart.detail.store');
 
-    Route::get('/admin/books', [\App\Http\Controllers\AdminController::class, 'books']);
+    Route::get('/admin/books', [\App\Http\Controllers\AdminController::class, 'books'])->name('admin.books');
     Route::get('/admin/chart', [\App\Http\Controllers\AdminController::class, 'chart'])
     ->name('admin.chart');
 });

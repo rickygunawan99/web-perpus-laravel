@@ -1,94 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts/blankLayout')
 
-<head>
-    @include('/partials/style')
+@section('title', 'Login')
 
-    <style>
-        .divider:after,
-        .divider:before {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: #eee;
-        }
-        .h-custom {
-            height: calc(100% - 73px);
-        }
-        @media (max-width: 450px) {
-            .h-custom {
-                height: 100%;
-            }
-        }
-    </style>
-    <title>Katalog Buku</title>
-</head>
-<body>
-@include('/partials/navbar')
-<section class="vh-100">
-    <div class="container h-custom">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-md-9 col-lg-6 col-xl-5">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                     class="img-fluid" alt="Sample image">
-            </div>
-            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                <form method="post" action="">
-                    <!-- Email input -->
-                    <div class="form-outline mb-4">
-                        <input type="text" id="form3Example3" class="form-control form-control-lg"
-                               placeholder="NIP" name="nip" autocomplete="off"/>
-                        <label class="form-label" for="form3Example3">NIP</label>
+@section('vendor-style')
+    <!-- Vendor -->
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/formvalidation/dist/css/formValidation.min.css')}}" />
+@endsection
+
+@section('page-style')
+    <!-- Page -->
+    <link rel="stylesheet" href="{{asset('assets/vendor/css/pages/page-auth.css')}}">
+@endsection
+
+@section('vendor-script')
+    <script src="{{asset('assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js')}}"></script>
+    <script src="{{asset('assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js')}}"></script>
+    <script src="{{asset('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js')}}"></script>
+@endsection
+
+@section('page-script')
+    <script src="{{asset('assets/js/pages-auth.js')}}"></script>
+
+@endsection
+
+@section('content')
+    <div class="container-xxl">
+        <div class="authentication-wrapper authentication-basic container-p-y">
+            <div class="authentication-inner py-4">
+                <!-- Login -->
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Logo -->
+                        <div class="app-brand justify-content-center mb-4 mt-2">
+                            <a href="{{url('/')}}" class="app-brand-link gap-2">
+                                <span class="app-brand-logo demo">@include('_partials.macros',["height"=>20,"withbg"=>'fill: #fff;'])</span>
+                                <span class="app-brand-text demo text-body fw-bold ms-1">{{config('variables.templateName')}}</span>
+                            </a>
+                        </div>
+                        <!-- /Logo -->
+                        <p class="mb-4">Please sign-in to your account and start the adventure</p>
+
+                        <form class="mb-3" action="/admin/login" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="email" class="form-label">NIP</label>
+                                <input type="text" class="form-control" id="NIP" name="nip" autofocus autocomplete="off">
+                                @error('nip')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div>
+                            <div class="mb-3 form-password-toggle">
+                                <div class="d-flex justify-content-between">
+                                    <label class="form-label" for="password">Password</label>
+                                    <a href="{{url('auth/forgot-password-basic')}}">
+                                        <small>Forgot Password?</small>
+                                    </a>
+                                </div>
+                                <div class="input-group input-group-merge">
+                                    <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                                    @error('password')
+                                    <span class="text-danger">{{$message}}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                            </div>
+                        </form>
+
+                        <p class="text-center">
+                            <span>New on our platform?</span>
+                            <a href="/register">
+                                <span>Create an account</span>
+                            </a>
+                        </p>
                     </div>
-
-                    <!-- Password input -->
-                    <div class="form-outline mb-3">
-                        <input type="password" id="form3Example4" class="form-control form-control-lg"
-                               placeholder="Enter password" name="password" />
-                        <label class="form-label" for="form3Example4">Password</label>
-                    </div>
-
-                    {{--                    <div class="d-flex justify-content-between align-items-center">--}}
-                    {{--                        <!-- Checkbox -->--}}
-                    {{--                        <div class="form-check mb-0">--}}
-                    {{--                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />--}}
-                    {{--                            <label class="form-check-label" for="form2Example3">--}}
-                    {{--                                Remember me--}}
-                    {{--                            </label>--}}
-                    {{--                        </div>--}}
-                    {{--                        <a href="#" class="text-body">Forgot password?</a>--}}
-                    {{--                    </div>--}}
-
-                    <div class="text-center text-lg-start mt-4 pt-2">
-                        <button type="submit" class="btn btn-primary btn-lg"
-                                style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-                    </div>
-                    @csrf
-                </form>
+                </div>
+                <!-- /Register -->
             </div>
         </div>
     </div>
-    <div>
-
-        <!-- Right -->
-        <div>
-            <a href="#" class="text-white me-4">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" class="text-white me-4">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" class="text-white me-4">
-                <i class="fab fa-google"></i>
-            </a>
-            <a href="#" class="text-white">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
-        </div>
-        <!-- Right -->
-    </div>
-</section>
-</body>
-@include('partials.script')
-@include('partials.footer')
-</html>
+@endsection

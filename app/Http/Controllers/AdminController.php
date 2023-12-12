@@ -15,9 +15,11 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -46,7 +48,9 @@ class AdminController extends Controller
     public function addBook(): View
     {
         $categories = Category::all();
-        return view('admin.tambah-buku', [
+
+
+        return view('admin.add-book', [
             'categories' => $categories
         ]);
     }
@@ -82,7 +86,10 @@ class AdminController extends Controller
             $book->author()->syncWithoutDetaching($authors);
         }
 
-        return redirect()->to('/admin')->with('success', 'Sukses menambahkan buku');
+        return redirect()->to('/admin/books')->with([
+            'status' => 'success',
+            'message' => 'Sukses tambah buku'
+        ]);
     }
 
     public function destroyBook(Request $request): RedirectResponse
@@ -130,9 +137,9 @@ class AdminController extends Controller
         }
     }
 
-    public function approve(Request $request): View
+    public function confirmCart(Request $request): View
     {
-        return view('admin.approve', [
+        return view('admin.confirm-all', [
             'transaction' => Cart::where('is_approve', 1)
                 ->where('is_checkout', 1)->get()
         ]);
@@ -140,21 +147,27 @@ class AdminController extends Controller
 
     public function confirm(Cart $cart): View
     {
-        return view('admin.confirm', [
+        return view('admin.confirm-detail', [
            'cart' => $cart
         ]);
     }
 
-    public function doConfirm(Request $request, Cart $cart): RedirectResponse
+    public function doConfirm(Request $request, Cart $cart): RedirectResponse|JsonResponse
     {
         try {
             $cart->is_approve = $request->input('status');
             $cart->push();
+
+            return redirect('/admin/confirm')->with([
+                'status' => 'success',
+                'message' => 'Berhasil konfirmasi peminjaman dengan nomor ' . $cart->id
+            ]);
         }catch (Exception $exception){
-
+            return response()->json([
+                'status' =>  $exception->getCode(),
+                'message' => $exception->getMessage()
+            ]);
         }
-
-        return redirect('/admin');
     }
 
     public function login(): View
@@ -162,42 +175,46 @@ class AdminController extends Controller
         return \view('admin.login');
     }
 
-    public function doLogin(Request $request): RedirectResponse
+    public function doLogin(Request $request): RedirectResponse|JsonResponse
     {
         try {
-            $validator = Validator::make($request->all(), [
+            $credentials = $request->validate([
                 'nip' => 'required|exists:admins,nip',
                 'password' => 'required'
             ]);
 
-            if($validator->fails()){
-                return redirect('/admin/login')->withErrors($validator);
+            if(Auth::guard('admin')->attempt($credentials)){
+
+                request()->session()->regenerate();
+
+                $admin = Admin::where('nip', $credentials['nip'])->first();
+
+                Auth::guard('admin')->login($admin);
+
+                session(['role'=>'admin', 'id'=>$admin->id]);
+
+                return redirect('/admin');
             }
-            $validated = $validator->safe()->all();
-            $admin = Admin::where('nip', $validated['nip'])->first();
 
-            if(!$admin || $validated['password'] != $admin->password){
-                return redirect('/admin/login')->with('err', 'nip and password not found');
-            }
+            return redirect('/admin/login')->withErrors([
+                'nip' => 'NIP dan password tidak ditemukan'
+            ])->onlyInput('nip');
 
-            session(['role'=>'admin', 'id'=>$admin->id_admin]);
-
-        }catch (Exception $exception){
-
+        }catch (Exception $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], 501);
         }
-        return redirect('/admin');
     }
 
-    public function waitingCarts(): View
+    public function confirmList(): View
     {
-        return view('admin.approve-return', [
-            'cart' => Cart::where('is_approve', 2)->get()
-        ]);
+        return view('admin.return-list');
     }
 
     public function cartDetail(Cart $cart): View
     {
-        return view('admin.cart-return-detail', [
+        return view('admin.return-detail', [
             'cart' => $cart
         ]);
     }
@@ -206,8 +223,12 @@ class AdminController extends Controller
     {
         $cart->biaya = $request->input('biaya');
         $cart->denda = $request->input('denda') ?? 0;
+        $cart->is_approve = 'returned';
         $cart->save();
-        return redirect()->to('/admin')->with('success', 'Sukses konfirmasi pengembalian');
+        return redirect()->to('/admin/return')->with([
+            'status' => 'success',
+            'message' => 'Pengembalian dengan nomor ' . $cart->id . ' telah dikonfirmasi'
+        ]);
     }
 
     public function chart(): View
@@ -234,5 +255,10 @@ class AdminController extends Controller
 
         return redirect()->route('admin.add-member')
             ->with(['success' => 'akun berhasil dibuat']);
+    }
+
+    public function member()
+    {
+        return view('admin.all-member');
     }
 }

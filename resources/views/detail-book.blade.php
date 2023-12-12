@@ -1,119 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.horizontalLayout')
 
-<head>
-    @include('partials/style')
-    @include('partials/script')
-    <title>Detail Buku</title>
-</head>
+@section('page-script')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<body>
-@include('partials/navbar')
+    <script>
 
-<div class="container-detail">
-    <div class="book-picture">
-        <img src="https://source.unsplash.com/random/230x200/?book" alt="buku">
-        <!-- <a href="#" class="prev">&#10094;</a>
-        <a href="#" class="next">&#10095;</a> -->
-    </div>
+        const saveToCart = document.getElementById('btn-cart');
 
-    <input type="hidden" value="{{$book->id_book}}" id="id-book">
-    <div class="book-detail">
-        <div class="book-auth-name text-gray">
-            @foreach($book->author as $author)
-                {{$author->name}},
-            @endforeach
-        </div>
-        <div class="book-title">
-            <div class="text">{{$book->title}}</div>
-        </div>
-        <div style="font-weight: bold;">
-            <div class="text">Description </div>
-        </div>
-        <div class="book-desc">
-            <div class="text">
-                {{$book->description}}
-            </div>
-        </div>
-        <div class="detail-info">
-            <div class="text bold">Detail Buku</div>
-            <table style="width: 100%;">
-                <tr>
-                    <th style="width: 50%"></th>
-                    <th></th>
-                </tr>
-{{--                <tr class="text-gray bold">--}}
-{{--                    <td>Judul</td>--}}
-{{--                </tr>--}}
-{{--                <tr class="detail-value">--}}
-{{--                    <td>{{$book->title}}</td>--}}
-{{--                </tr>--}}
-                <tr class="text-gray bold">
-                    <td>Jumlah Halaman</td>
-                </tr>
-                <tr class="detail-value">
-                    <td>{{$book->total_page}}</td>
-                </tr>
-            </table>
-        </div>
-        <div class="button">
-            <button class="btn-cart" id="btn-cart">
-                    <span class="cart-icon">
-                        <i class="bi bi-bag"></i>
-                    </span>
-                Masukan ke Daftar Pinjam
-            </button>
-        </div>
-        <input type="hidden" value="{{csrf_token()}}" id="token" name="_token">
-    </div>
-</div>
+        const idBook = document.getElementById('id-book').value;
 
-<script>
+        saveToCart.onclick = function(){
+            const cartIcon = document.querySelector('ul li .btn-cart-nav');
+            cart('save',idBook);
+        }
 
-    const saveToCart = document.getElementById('btn-cart');
-    console.info(saveToCart)
-
-    const idBook = document.getElementById('id-book').value;
-
-    saveToCart.onclick = function(){
-        const cartIcon = document.querySelector('ul li .btn-cart-nav');
-        cart('save',idBook);
-    }
-
-    function cart(action, id_book){
-        $.ajax({
-            url: `/cart?action=${action}&book-id=${id_book}`,
-            type: 'get',
-            data: {
-                _token: document.getElementById('token').value
-            },
-            success: function (data){
-                if(data.status === 'oke'){
+        function cart(action, id_book){
+            $.ajax({
+                url: `/cart?action=${action}&book-id=${id_book}`,
+                type: 'get',
+                data: {
+                    _token: "{{csrf_token()}}"
+                },
+                success: function (data){
+                    if(data.status === 'oke'){
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: data.message,
+                            showConfirmButton: false,
+                        })
+                    }else{
+                        window.location.href = '/login'
+                    }
+                },
+                error: function (data){
+                    const response = JSON.parse(data.responseText)
                     Swal.fire({
                         position: 'center',
-                        icon: 'success',
-                        title: data.message,
+                        icon: 'error',
+                        title: response.message,
                         showConfirmButton: false,
                     })
-                }else{
-                    window.location.href = '/login';
                 }
-            },
-            error: function (data){
-                const response = JSON.parse(data.responseText)
-                Swal.fire({
-                    position: 'center',
-                    icon: 'error',
-                    title: response.message,
-                    showConfirmButton: false,
-                })
-            }
-        })
+            })
 
-    }
+        }
 
-</script>
+    </script>
+@endsection
 
-</body>
-@include('partials/footer')
-</html>
+@section('content')
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-4">
+                    <img src="{{asset('assets/img/elements/9.jpg')}}" class="card-img card-img-left" alt="buku" style="object-fit: contain">
+                </div>
+                <div class="col-8">
+                    <div class="d-flex gap-3 flex-column">
+                        <h5 class="card-title fs-5 fw-bold"> {{$book->title}} </h5>
+                        <div>
+                            <span class="fs-6 text-black-50">Author : </span>
+                            @foreach($book->author as $author)
+                                @if($loop->index == count($book->author) -1 )
+                                    <span class="fs-6 text-black-50">{{$author->name}}</span>
+                                @else
+                                    <span class="fs-6 text-black-50">{{$author->name}}, </span>
+                                @endif
+                            @endforeach
+                        </div>
+                        <h5 class="card-text">Jumlah Halaman : {{$book->total_page}}</h5>
+                        <p class="card-text mt-2 fs-5">
+                            Description : {{$book->description}}
+                        </p>
+                        <input type="hidden" value="{{$book->id_book}}" id="id-book">
+                    </div>
+
+                    <div class="d-flex align-items-end">
+                        <button class="btn btn-primary" id="btn-cart">
+                            Masukan ke Daftar Pinjam
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
