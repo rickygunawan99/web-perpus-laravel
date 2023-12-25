@@ -1,6 +1,9 @@
 <?php
 
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Bus\Batch;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +20,31 @@ use Illuminate\Support\Facades\Route;
 //    return view('admin.dashboard-new');
 //});
 
+Route::get('/mail/template', function (){
+   return view('mail.order-ship', [
+       'name' => 'Eko',
+       'created_at' => now(),
+       'id' => 2,
+   ]);
+});
 
 Route::get('/mail/send', function (){
-    foreach (['hello@gmail.com', 'hello2@gmail.com'] as $email){
-        \App\Jobs\SendNotifEmailJob::dispatch($email);
+    $faker = \Faker\Factory::create('en_EN');
+
+    $cart = \App\Models\Cart::find(102);
+
+    for ($i = 0; $i < 2; $i++) {
+        $emails[] = $faker->safeEmail;
+    }
+
+    try {
+        foreach ($emails as $email){
+            \App\Jobs\SendNotifEmailJob::dispatch($email, 'Test', now(), 12);
+
+//            Mail::to($email)->send(new OrderShipped('Test', now(), 12));
+        }
+    }catch (\Exception $e){
+        var_dump($e->getMessage());
     }
 });
 

@@ -24,6 +24,7 @@
                 <div class="divider"></div>
 
                 <h5>Durasi Peminjaman : {{$cart->total_day}} hari</h5>
+                <h5>Terakhir pengembalian : {{$cart->created_at->addDays(2)->toFormattedDateString()}}</h5>
 
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInput" name="biaya" placeholder="input biaya disini" aria-describedby="floatingInputHelp" />

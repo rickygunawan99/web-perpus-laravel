@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Mail\OrderShipped;
+use App\Models\Cart;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,13 +17,16 @@ class SendNotifEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     public function __construct(
-        public string $email
+        public string $email,
+        public string $name,
+        public $created_at,
+        public $id
     )
     {
         //
     }
     public function handle()
     {
-        Mail::to($this->email)->send(new OrderShipped());
+        Mail::to($this->email)->send(new OrderShipped($this->name, $this->created_at, $this->id));
     }
 }

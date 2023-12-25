@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Cart;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -13,10 +14,14 @@ class OrderShipped extends Mailable
 {
     use Queueable, SerializesModels;
     public function __construct(
+        public $name,
+        public $created_at,
+        public $id,
     )
     {
         //
     }
+
     public function envelope()
     {
         return new Envelope(
@@ -29,6 +34,7 @@ class OrderShipped extends Mailable
             view: 'mail.order-ship',
         );
     }
+
     public function attachments()
     {
         return [];

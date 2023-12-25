@@ -22,19 +22,19 @@
                 {data: 'name'},
                 {data: 'email'},
                 {data: 'tanggal_daftar'},
-                {data: 'status'}
+                // {data: 'status'}
             ],
-            columnDefs: [
-                {
-                    target: 4,
-                    render: function (data, type, full, meta){
-                        if(data)
-                            return '<span class="badge bg-success ">Aktif</span>'
-                        else
-                        return '<span class="ti ti-x bg-danger">Tidak aktif</span> '
-                    }
-                }
-            ]
+            // columnDefs: [
+            //     {
+            //         target: 4,
+            //         render: function (data, type, full, meta){
+            //             if(data)
+            //                 return '<span class="badge bg-success ">Aktif</span>'
+            //             else
+            //             return '<span class="ti ti-x bg-danger">Tidak aktif</span> '
+            //         }
+            //     }
+            // ]
         })
     </script>
 @endsection
@@ -61,7 +61,7 @@
                     <th>Nama</th>
                     <th>Email</th>
                     <th>Tanggal Pendaftaran</th>
-                    <th>Status</th>
+{{--                    <th>Status</th>--}}
                 </tr>
                 </thead>
             </table>
